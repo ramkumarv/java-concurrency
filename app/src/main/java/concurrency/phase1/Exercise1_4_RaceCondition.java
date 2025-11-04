@@ -15,15 +15,17 @@ public class Exercise1_4_RaceCondition {
      * Unsafe counter - demonstrates race condition
      */
     static class UnsafeCounter {
-        private int count = 0;
+        private volatile int count = 0;  // volatile ensures visibility, NOT atomicity!
         
-        // This method is NOT thread-safe!
+        // This method is STILL NOT thread-safe even with volatile!
         public void increment() {
-            // This is NOT atomic! It consists of:
-            // 1. Read count
-            // 2. Increment count
-            // 3. Write count
-            // Multiple threads can interleave these steps
+            // This is NOT atomic! Even with volatile, it consists of:
+            // 1. Read count (volatile read - sees latest value)
+            // 2. Increment count (local operation)
+            // 3. Write count (volatile write - visible to all)
+            // Multiple threads can STILL interleave these steps!
+            // Volatile only ensures you see the latest value, but doesn't prevent
+            // multiple threads from reading the same value and both writing it back.
             count++;
         }
         
@@ -140,14 +142,18 @@ public class Exercise1_4_RaceCondition {
         System.out.println("Time taken: " + (endTime - startTime) + " ms");
         
         // Explain what's happening
-        System.out.println("\n=== Why Race Condition Occurs ===");
+        System.out.println("\n=== Why Race Condition Occurs (Even with volatile!) ===");
         System.out.println("The increment operation (count++) is NOT atomic:");
-        System.out.println("  1. Thread A reads count = 5");
-        System.out.println("  2. Thread B reads count = 5  (before A writes)");
-        System.out.println("  3. Thread A increments to 6 and writes");
-        System.out.println("  4. Thread B increments to 6 and writes");
+        System.out.println("  1. Thread A reads count = 5 (volatile read - sees latest value)");
+        System.out.println("  2. Thread B reads count = 5 (volatile read - also sees 5)");
+        System.out.println("  3. Thread A increments locally to 6");
+        System.out.println("  4. Thread B increments locally to 6");
+        System.out.println("  5. Thread A writes 6 (volatile write)");
+        System.out.println("  6. Thread B writes 6 (volatile write - overwrites A's value!)");
         System.out.println("Result: Both threads incremented, but count only went from 5 to 6!");
         System.out.println("Expected: count should be 7 (5 + 1 + 1)");
+        System.out.println("\nKEY INSIGHT: volatile ensures visibility (you see the latest value)");
+        System.out.println("            but does NOT ensure atomicity (the operation is still not atomic)");
         System.out.println("\nThis is why we need synchronization (covered in Phase 2)!");
     }
 }

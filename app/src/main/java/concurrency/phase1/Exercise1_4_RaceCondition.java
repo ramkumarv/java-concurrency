@@ -15,7 +15,7 @@ public class Exercise1_4_RaceCondition {
      * Unsafe counter - demonstrates race condition
      */
     static class UnsafeCounter {
-        private volatile int count = 0;  // volatile ensures visibility, NOT atomicity!
+        private int count = 0;  // volatile ensures visibility, NOT atomicity!
         
         // This method is STILL NOT thread-safe even with volatile!
         public void increment() {

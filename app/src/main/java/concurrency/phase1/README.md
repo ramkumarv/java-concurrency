@@ -49,6 +49,13 @@ java -cp build/classes concurrency.phase1.Exercise1_1_SimpleThread
    - Implement graceful thread termination
    - Understand interrupt status flags
 
+6. **Exercise1_6_ThreadLifecycle**: Thread lifecycle states
+   - Understand all thread states in Java (NEW, RUNNABLE, BLOCKED, WAITING, TIMED_WAITING, TERMINATED)
+   - See how threads transition between states
+   - Learn to observe thread states programmatically using `getState()`
+   - Understand when each state occurs
+   - Learn Thread.State enum
+
 ## Key Concepts
 
 - **Thread**: A lightweight process that can run concurrently with other threads
@@ -57,6 +64,8 @@ java -cp build/classes concurrency.phase1.Exercise1_1_SimpleThread
 - **join()**: Waits for a thread to complete
 - **sleep()**: Pauses the current thread for a specified time
 - **interrupt()**: Sends an interrupt signal to a thread
+- **getState()**: Returns the current state of a thread (Thread.State enum)
+- **Thread States**: NEW, RUNNABLE, BLOCKED, WAITING, TIMED_WAITING, TERMINATED
 
 ## Next Steps
 

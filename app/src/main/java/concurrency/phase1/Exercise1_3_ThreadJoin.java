@@ -29,7 +29,7 @@ public class Exercise1_3_ThreadJoin {
                 System.out.println(name + " finished working");
             } catch (InterruptedException e) {
                 System.err.println(name + " was interrupted");
-                Thread.currentThread().interrupt();
+                Thread.currentThread().interrupt(); // this is important to set the interrupt flag to true otherwise the thread will not be interrupted
             }
         }
     }

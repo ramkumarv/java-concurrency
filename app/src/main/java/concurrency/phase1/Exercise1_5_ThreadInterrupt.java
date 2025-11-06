@@ -33,6 +33,9 @@ public class Exercise1_5_ThreadInterrupt {
                     Thread.sleep(100); // Sleep doesn't check interrupt in this context
                 } catch (InterruptedException e) {
                     // Even if we catch it, we're not doing anything with it
+                    //so the fix is to set the interrupt flag to true otherwise the thread will not be interrupted
+                    //Thread.currentThread().interrupt(); here we are intentionally not setting the interrupt flag to true
+                    //to explain this case
                     System.out.println(name + " caught InterruptedException but continuing...");
                 }
             }

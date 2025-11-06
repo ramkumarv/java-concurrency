@@ -8,6 +8,7 @@ import concurrency.phase1.Exercise1_2_MultipleThreads;
 import concurrency.phase1.Exercise1_3_ThreadJoin;
 import concurrency.phase1.Exercise1_4_RaceCondition;
 import concurrency.phase1.Exercise1_5_ThreadInterrupt;
+import concurrency.phase1.Exercise1_6_ThreadLifecycle;
 import concurrency.phase2.Exercise2_1_SynchronizedCounter;
 import concurrency.phase2.Exercise2_2_ThreadSafeBankAccount;
 import concurrency.phase2.Exercise2_3_Deadlock;
@@ -48,6 +49,11 @@ public class App {
                 System.out.println("Running Exercise 1.5: Thread Interrupt\n");
                 Exercise1_5_ThreadInterrupt.main(new String[0]);
                 break;
+            case "1.6":
+            case "1-6":
+                System.out.println("Running Exercise 1.6: Thread Lifecycle\n");
+                Exercise1_6_ThreadLifecycle.main(new String[0]);
+                break;
             case "2.1":
             case "2-1":
                 System.out.println("Running Exercise 2.1: Synchronized Counter\n");
@@ -87,6 +93,7 @@ public class App {
         System.out.println("  1.3 - Thread Join");
         System.out.println("  1.4 - Race Condition");
         System.out.println("  1.5 - Thread Interrupt");
+        System.out.println("  1.6 - Thread Lifecycle");
         System.out.println("\nPhase 2: Synchronization Basics");
         System.out.println("  2.1 - Synchronized Counter");
         System.out.println("  2.2 - Thread-Safe Bank Account");

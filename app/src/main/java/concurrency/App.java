@@ -14,6 +14,11 @@ import concurrency.phase2.Exercise2_2_ThreadSafeBankAccount;
 import concurrency.phase2.Exercise2_3_Deadlock;
 import concurrency.phase2.Exercise2_4_Volatile;
 import concurrency.phase2.Exercise2_5_ProducerConsumer;
+import concurrency.phase3.Exercise3_1_ReentrantLock;
+import concurrency.phase3.Exercise3_2_ReadWriteLock;
+import concurrency.phase3.Exercise3_3_ConditionProducerConsumer;
+import concurrency.phase3.Exercise3_4_StampedLock;
+import concurrency.phase3.Exercise3_5_LockingPerformanceComparison;
 
 public class App {
     public static void main(String[] args) {
@@ -79,6 +84,31 @@ public class App {
                 System.out.println("Running Exercise 2.5: Producer-Consumer\n");
                 Exercise2_5_ProducerConsumer.main(new String[0]);
                 break;
+            case "3.1":
+            case "3-1":
+                System.out.println("Running Exercise 3.1: ReentrantLock\n");
+                Exercise3_1_ReentrantLock.main(new String[0]);
+                break;
+            case "3.2":
+            case "3-2":
+                System.out.println("Running Exercise 3.2: ReadWriteLock\n");
+                Exercise3_2_ReadWriteLock.main(new String[0]);
+                break;
+            case "3.3":
+            case "3-3":
+                System.out.println("Running Exercise 3.3: Condition Producer-Consumer\n");
+                Exercise3_3_ConditionProducerConsumer.main(new String[0]);
+                break;
+            case "3.4":
+            case "3-4":
+                System.out.println("Running Exercise 3.4: StampedLock\n");
+                Exercise3_4_StampedLock.main(new String[0]);
+                break;
+            case "3.5":
+            case "3-5":
+                System.out.println("Running Exercise 3.5: Locking Performance Comparison\n");
+                Exercise3_5_LockingPerformanceComparison.main(new String[0]);
+                break;
             default:
                 System.out.println("Unknown exercise: " + exercise);
                 printMenu();
@@ -100,6 +130,12 @@ public class App {
         System.out.println("  2.3 - Deadlock");
         System.out.println("  2.4 - Volatile");
         System.out.println("  2.5 - Producer-Consumer");
+        System.out.println("\nPhase 3: Java Concurrency Utilities - Locks");
+        System.out.println("  3.1 - ReentrantLock");
+        System.out.println("  3.2 - ReadWriteLock");
+        System.out.println("  3.3 - Condition Producer-Consumer");
+        System.out.println("  3.4 - StampedLock");
+        System.out.println("  3.5 - Locking Performance Comparison");
         System.out.println("\nUsage: ./gradlew run --args=\"1.1\"");
         System.out.println("Or: java -cp build/classes concurrency.App 1.1");
     }

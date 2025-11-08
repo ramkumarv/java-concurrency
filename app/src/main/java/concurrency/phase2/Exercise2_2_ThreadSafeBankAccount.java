@@ -215,8 +215,71 @@ public class Exercise2_2_ThreadSafeBankAccount {
         System.out.println("Time: " + (endTime - startTime) + " ms");
         System.out.println("Note: Synchronized version is slower but correct!\n");
         
-        // Scenario 3: Multiple accounts with transfers
-        System.out.println("=== Scenario 3: Multiple Accounts with Transfers ===\n");
+        // Scenario 3: Demonstrating deadlock with ThreadSafeBankAccount.transfer()
+        System.out.println("=== Scenario 3: Deadlock Demonstration (ThreadSafeBankAccount) ===\n");
+        System.out.println("Warning: This scenario may deadlock! It demonstrates the problem.");
+        System.out.println("If deadlock occurs, the program will hang. Use Ctrl+C to stop.\n");
+        
+        ThreadSafeBankAccount deadlockAccount1 = new ThreadSafeBankAccount(1000.0);
+        ThreadSafeBankAccount deadlockAccount2 = new ThreadSafeBankAccount(1000.0);
+        
+        // Create threads that do bidirectional transfers to trigger deadlock
+        Thread deadlockThread1 = new Thread(() -> {
+            for (int i = 0; i < 100; i++) {
+                deadlockAccount1.transfer(deadlockAccount2, 10.0);
+            }
+        }, "DeadlockThread-1");
+        
+        Thread deadlockThread2 = new Thread(() -> {
+            for (int i = 0; i < 100; i++) {
+                deadlockAccount2.transfer(deadlockAccount1, 10.0);
+            }
+        }, "DeadlockThread-2");
+        
+        System.out.println("Starting bidirectional transfers...");
+        System.out.println("Thread 1: account1 -> account2");
+        System.out.println("Thread 2: account2 -> account1");
+        System.out.println("This creates a circular wait condition.\n");
+        
+        startTime = System.currentTimeMillis();
+        deadlockThread1.start();
+        deadlockThread2.start();
+        
+        // Use a timeout to detect deadlock
+        long timeout = 5000; // 5 seconds
+        boolean deadlockDetected = false;
+        
+        try {
+            deadlockThread1.join(timeout);
+            if (deadlockThread1.isAlive()) {
+                deadlockDetected = true;
+                System.out.println("⚠️ DEADLOCK DETECTED! Thread 1 did not complete within " + timeout + "ms");
+            }
+            deadlockThread2.join(timeout);
+            if (deadlockThread2.isAlive()) {
+                deadlockDetected = true;
+                System.out.println("⚠️ DEADLOCK DETECTED! Thread 2 did not complete within " + timeout + "ms");
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        
+        endTime = System.currentTimeMillis();
+        
+        if (deadlockDetected) {
+            System.out.println("\n❌ DEADLOCK CONFIRMED!");
+            System.out.println("Both threads are waiting for each other's locks.");
+            System.out.println("Thread 1 holds account1 lock, waiting for account2 lock.");
+            System.out.println("Thread 2 holds account2 lock, waiting for account1 lock.");
+        } else {
+            System.out.println("\n✓ Transfer completed (deadlock did not occur this time)");
+            System.out.println("Note: Deadlocks are timing-dependent and may not always occur.");
+            System.out.println("Run the program multiple times to increase the chance of deadlock.");
+        }
+        System.out.println("Time: " + (endTime - startTime) + " ms\n");
+        
+        // Scenario 4: Multiple accounts with transfers (using improved version)
+        System.out.println("=== Scenario 4: Multiple Accounts with Transfers (Improved Version) ===\n");
         ImprovedBankAccount account1 = new ImprovedBankAccount(1000.0);
         ImprovedBankAccount account2 = new ImprovedBankAccount(2000.0);
         ImprovedBankAccount account3 = new ImprovedBankAccount(1500.0);
